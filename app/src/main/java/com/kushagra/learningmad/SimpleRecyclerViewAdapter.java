@@ -1,5 +1,7 @@
 package com.kushagra.learningmad;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +19,11 @@ public class SimpleRecyclerViewAdapter
                 <SimpleRecyclerViewAdapter.ViewHolder> {
 
     ArrayList<SampleModel> meroData = new ArrayList<>();
+    Context recyclerKoContext;
 
-    SimpleRecyclerViewAdapter(ArrayList<SampleModel> passedData){
+    SimpleRecyclerViewAdapter(Context context,
+                              ArrayList<SampleModel> passedData){
+        recyclerKoContext = context;
         meroData = passedData;
     }
 
@@ -32,6 +37,28 @@ public class SimpleRecyclerViewAdapter
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 //        holder.textView.setText(meroData.get(position));
 
+        holder.number.setText(Integer.toString(position+1));
+
+        holder.name.setText(meroData.get(position).userName);
+
+        holder.subTitle.setText(meroData.get(position).address);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(
+                        recyclerKoContext,
+                        DetailsActivity.class);
+                intent.putExtra(
+                        "name",
+                        meroData.get(position).userName
+                );
+                recyclerKoContext.startActivity(intent);
+
+            }
+        });
+
     }
 
     @Override
@@ -40,10 +67,13 @@ public class SimpleRecyclerViewAdapter
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView number, name, subTitle;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-//            textView = itemView.findViewById(R.id.textView);
+
+            number = itemView.findViewById(R.id.number);
+            name = itemView.findViewById(R.id.name);
+            subTitle = itemView.findViewById(R.id.subtitle);
         }
     }
 }

@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view);
         linearLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL, false);
-        adapter = new SimpleRecyclerViewAdapter(apiData);
+        adapter = new SimpleRecyclerViewAdapter(this,apiData);
 
 
         recyclerView.setAdapter(adapter);
